@@ -22,25 +22,51 @@ export class HomePage {
     console.log(this.text);
   }
 
-  listen() {
-    if(this.hasPermission())
-    {
+  listen():void {
+    //if(this.hasPermission())
+    //{
       this.speech.startListening().subscribe(data => this.sentences = data, error => console.log(error));
-    }
-    else
-    {
-      this.getPermission();
-      this.speech.startListening().subscribe(data => console.log(data), error => console.log(error));
-    }
+    //}
+    //else
+    //{
+     // this.getPermission();
+      //this.speech.startListening().subscribe(data => console.log(data), error => console.log(error));
+    //}
   }
 
   async hasPermission():Promise<boolean> {
-    const permission = await this.speech.hasPermission();
-    return permission;
+    try {
+      const permission = await this.speech.hasPermission();
+      return permission;  
+    } catch (error) {
+      console.log(error);
+    }
+    
   }
 
-  async getPermission() {
-    const permission = await this.speech.requestPermission();
+  async getPermission():Promise<void> {
+    try {
+      const permission = await this.speech.requestPermission();  
+      console.log(permission);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async isSpeechSupported():Promise<boolean> {
+    const isAvailable = await this.speech.isRecognitionAvailable();
+    console.log(isAvailable);
+    return isAvailable;
+  }
+
+  async getSupportedLanguages():Promise<Array<String>> {
+    try {
+      const languages = await this.speech.getSupportedLanguages();
+      console.log(languages);
+      return languages;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }
