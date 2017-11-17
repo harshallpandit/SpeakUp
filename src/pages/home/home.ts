@@ -29,6 +29,7 @@ export class HomePage {
     else
     {
       this.getPermission();
+      this.speech.startListening().subscribe(data => console.log(data), error => console.log(error));
     }
   }
 
