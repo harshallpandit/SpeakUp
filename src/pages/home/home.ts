@@ -11,15 +11,19 @@ export class HomePage {
 
   text: string;
   sentences: Array<String> = [];
-
+  error: string;
   constructor(private speech: SpeechRecognition, private tts: TextToSpeech, public navCtrl: NavController) {
 
   }
 
-  async speakIt()
+  async speakIt():Promise<any>
   {
-    this.tts.speak(this.text);
-    console.log(this.text);
+    try {
+      await this.tts.speak({text: this.text, locale: 'en-GB'});
+      console.log(this.text);
+    } catch (error) {
+      this.error = error;
+    }
   }
 
   listen():void {

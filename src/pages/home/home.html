@@ -16,8 +16,10 @@
   <button ion-button (click) = "listen()">Listen</button>
 
   <ion-card>
-    <ion-card-content *ngFor = "let sentence of sentences">
-      <p>{{ sentence }}</p>
+    <ion-card-content >
+      <p>{{ sentences[0] }}</p>
     </ion-card-content> 
   </ion-card>
+
+  <p>{{ error }}</p>
 </ion-content>
