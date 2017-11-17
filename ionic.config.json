@@ -2,5 +2,7 @@
   "name": "SpeakUp",
   "app_id": "4b3ed24d",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }
