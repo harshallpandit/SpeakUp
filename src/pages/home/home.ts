@@ -10,6 +10,7 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition'
 export class HomePage {
 
   text: string;
+  sentences: Array<String> = [];
 
   constructor(private speech: SpeechRecognition, private tts: TextToSpeech, public navCtrl: NavController) {
 
@@ -21,10 +22,10 @@ export class HomePage {
     console.log(this.text);
   }
 
-  async listen() {
+  listen() {
     if(this.hasPermission())
     {
-      this.speech.startListening().subscribe(data => console.log(data), error => console.log(error));
+      this.speech.startListening().subscribe(data => this.sentences = data, error => console.log(error));
     }
     else
     {

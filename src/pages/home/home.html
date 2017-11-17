@@ -10,4 +10,10 @@
   </ion-item>
   <button ion-button (click) = "speakIt() ">speak</button>
   <button ion-button (click) = "listen()">Listen</button>
+
+  <ion-card>
+    <ion-card-content *ngFor = "let sentence of sentences">
+      <p>{{ sentence }}</p>
+    </ion-card-content> 
+  </ion-card>
 </ion-content>
