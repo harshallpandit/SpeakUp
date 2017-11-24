@@ -27,15 +27,7 @@ export class HomePage {
   }
 
   listen():void {
-    //if(this.hasPermission())
-    //{
       this.speech.startListening().subscribe(data => this.sentences = data, error => console.log(error));
-    //}
-    //else
-    //{
-     // this.getPermission();
-      //this.speech.startListening().subscribe(data => console.log(data), error => console.log(error));
-    //}
   }
 
   async hasPermission():Promise<boolean> {
