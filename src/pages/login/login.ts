@@ -4,7 +4,7 @@ import { RegisterPage } from './../register/register';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the LoginPage page.
@@ -23,7 +23,7 @@ export class LoginPage {
 
   user = {} as User;
 
-  constructor(private authentication: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private authentication: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
   }
 
 
@@ -39,6 +39,7 @@ export class LoginPage {
     const result = this.authentication.auth.signInWithEmailAndPassword(user.email, user.password);
     
     if(result) {
+      this.storage.set('email', user.email);
       this.navCtrl.push(TabsPage);
     }
   }

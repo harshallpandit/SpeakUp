@@ -16,8 +16,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HomePage } from '../pages/home/home';
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { TextToSpeech } from '@ionic-native/text-to-speech';
-
+import { IonicStorageModule, Storage } from '@ionic/storage';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { storage } from 'firebase/app';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_AUTH_CONFIG),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

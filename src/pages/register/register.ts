@@ -2,13 +2,7 @@ import { User } from './../../app/models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the RegisterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -17,11 +11,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class RegisterPage {
 
-
+  data = [];
   user = {} as User;
 
   constructor(private authentication: AngularFireAuth,
-     public navCtrl: NavController, public navParams: NavParams) {
+     public navCtrl: NavController, public navParams: NavParams, private fdb: AngularFireDatabase) {
+
+      this.fdb.list('/User').valueChanges().subscribe(_data => {
+      this.data = _data;
+    });
   }
 
   ionViewDidLoad() {
@@ -30,6 +28,12 @@ export class RegisterPage {
 
   register(user: User) {
     this.authentication.auth.createUserWithEmailAndPassword(user.email, user.password);
+    this.fdb.list('User/userid').push({
+      email: user.email,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName
+    });
   }
 
 }

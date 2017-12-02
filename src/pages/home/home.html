@@ -13,8 +13,8 @@
 
   <ion-card>
     <ion-card-content >
-      <p>{{ sentences }}</p>
-      <p>this is a test</p>
+      <p>{{ temp }}</p>
+      <p *ngFor="let m of messages">{{ m }}</p>
     </ion-card-content> 
   </ion-card>
 
