@@ -3,6 +3,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
+import firebase from 'firebase';
 
 @IonicPage()
 @Component({
@@ -28,11 +29,18 @@ export class RegisterPage {
 
   register(user: User) {
     this.authentication.auth.createUserWithEmailAndPassword(user.email, user.password);
-    this.fdb.list('User/userid').push({
+    /* this.fdb.list('/User/').push({
       email: user.email,
       password: user.password,
       firstName: user.firstName,
       lastName: user.lastName
+    }); */
+    let firebaseRef = firebase.database().ref('/User/').child(user.email.replace('.','*')).set({
+      email: user.email,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName
+    
     });
   }
 

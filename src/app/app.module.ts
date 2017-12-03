@@ -1,3 +1,6 @@
+import { CreateGroupPage } from './../pages/create-group/create-group';
+import { GroupsPage } from './../pages/groups/groups';
+import { AboutPage } from './../pages/about/about';
 import { RegisterPage } from './../pages/register/register';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,13 +22,16 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { storage } from 'firebase/app';
+import { GroupPage } from '../pages/group/group';
 
 @NgModule({
   declarations: [
     MyApp,
     TabsPage,
     LoginPage,
-    HomePage
+    HomePage,
+    GroupPage,
+    GroupsPage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +46,9 @@ import { storage } from 'firebase/app';
     MyApp,
     TabsPage,
     LoginPage,
-    HomePage
+    HomePage,
+    GroupPage,
+    GroupsPage
   ],
   providers: [
     StatusBar,

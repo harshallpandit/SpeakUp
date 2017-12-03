@@ -5,18 +5,29 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
-    <ion-textarea rows = "1" [(ngModel)] = "text"></ion-textarea>
-  </ion-item>
-  <button ion-button (click) = "speakIt()">speak</button>
-  <button ion-button (click) = "listen()">Listen</button>
-
-  <ion-card>
+  
+  <!--ion-card>
     <ion-card-content >
       <p>{{ temp }}</p>
       <p *ngFor="let m of messages">{{ m }}</p>
     </ion-card-content> 
-  </ion-card>
+  </ion-card-->
 
+  <!--ion-content class="padding" start-y="120"-->
+      <ol class="messages">
+        <li *ngFor="let sentence of sentences">{{sentence}}</li>
+      </ol>
+      <!--ol class="messages">
+          <li *ngFor="let t of textArr">{{t}}</li>
+      </ol-->
+        
+    <!--/ion-content--> 
   <p>{{ error }}</p>
 </ion-content>
+<ion-footer ion-fixed>
+<ion-item>
+  <ion-textarea rows = "1" [(ngModel)] = "text"></ion-textarea>
+</ion-item>
+<button ion-button (click) = "speakIt()">speak</button>
+<button ion-button (click) = "listen()">Listen</button>
+</ion-footer>
