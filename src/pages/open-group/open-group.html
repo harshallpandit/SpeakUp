@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color = "primary">
-    <ion-title>Home</ion-title>
+    <ion-title>{{groupName}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
     <div class="clear"><br/></div>
   
     <div *ngIf="messageFrom[i] != email" class="from-them">
-      <p><i style="color:#B200B2">{{displayNames[i]}}</i> <br/> {{message}}</p>
+      <p><b style="color:#B200B2">{{displayNames[i]}}</b> <br/> {{message}}</p>
     </div>
     <div class="clear"><br /></div>
   </div>

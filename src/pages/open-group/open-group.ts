@@ -1,6 +1,6 @@
 import { storage } from 'firebase/app';
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, Content } from 'ionic-angular';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { SpeechRecognition } from '@ionic-native/speech-recognition'; 
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -13,10 +13,10 @@ import { NavParams } from 'ionic-angular/navigation/nav-params';
 
 @Component({
   selector: 'page-open-group',
-  templateUrl: 'open-group.html'
+  templateUrl: 'open-group.html',
 })
 export class OpenGroupPage {
-
+  @ViewChild(Content) content: Content;
   data = [];
   text: string;
   sentences: Array<String> = [];
@@ -35,12 +35,12 @@ export class OpenGroupPage {
   lastName:string;
   fullName: string;
   displayNames = [];
+  groupName:string;
 
   constructor(private speech: SpeechRecognition, private tts: TextToSpeech, private fdb: AngularFireDatabase, public storage: Storage, public navParams:NavParams) {
        let firebaseRef = firebase.database().ref('/Groups/messages/'+this.navParams.get('groupKey')).on('value', (snapshot) => {
          this.temp = snapshot.val();
          let i = 0;
-         console.log(this.temp);
          for(let key in this.temp)
          {
            this.messages[i] = snapshot.child(key).val().message;
@@ -50,33 +50,49 @@ export class OpenGroupPage {
          }
       });
       
+      firebase.database().ref('/Groups/'+this.navParams.get('groupKey')+'/').on('value', (snapshot) => {
+        this.groupName = snapshot.val().groupName;
+      });
+
     this.storage.get('email').then((val) => {
       this.email = val;
     });
      this.storage.get('name').then((val) =>{
       this.fullName = val;
-    });
+    }); 
+  }
+
+  scrollToBottom() {
+    this.content.scrollToBottom();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GroupPage');
   }
+  ionViewDidEnter(){
+    this.content.scrollToBottom();
+  }
 
   async speakIt():Promise<any>
-  {console.log(this.email);
-    try {
+  {
+     try {
       await this.tts.speak({text: this.text, locale: 'en-US'});
       this.storage.get('name').then((val) => {
       this.fullName = val;
-      this.fdb.list('/Groups/messages/'+this.navParams.get('groupKey')).push({
+     let result = this.fdb.list('/Groups/messages/'+this.navParams.get('groupKey')).push({
        email: this.email,
        displayName: this.fullName,
        message: this.text       
       });
+      if(result) {
+        this.text='';
+        this.scrollToBottom();
+      }
     });
     } catch (error) {
       this.error = error;
     }
+    this.content.scrollToBottom();
   }
 
   async listen():Promise<any> {
@@ -93,6 +109,8 @@ export class OpenGroupPage {
         });
       });
       });
+      this.content.scrollToBottom();
+      this.text='';
   }
 
   async hasPermission():Promise<boolean> {
