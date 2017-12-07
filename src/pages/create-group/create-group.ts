@@ -1,3 +1,4 @@
+import { GroupPage } from './../group/group';
 import { storage } from 'firebase/app';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -6,12 +7,8 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import firebase  from 'firebase';
 import { Group } from './../../app/models/group';
 import { Storage } from '@ionic/storage';
-/**
- * Generated class for the CreateGroupPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { OpenGroupPage } from './../open-group/open-group';
+
 
 @IonicPage()
 @Component({
@@ -24,12 +21,11 @@ export class CreateGroupPage {
   group = {} as Group;
   members: string[];
   i = 0;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fdb: AngularFireDatabase, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private fdb: AngularFireDatabase, public storage: Storage, public navParam: NavParams) {
     this.members = [];
     storage.get('email').then((val) => {
         this.members.push(val);
       });
-  //  this.members[0] = this.email;
   }
 
   ionViewDidLoad() {
@@ -43,11 +39,10 @@ export class CreateGroupPage {
   }
 
   startConversation() {
-    let key = this.fdb.list('/Messages').push({
+    let key = this.fdb.list('/Groups').push({
       members : this.members,
       groupName : this.group.groupName
     }).key;
-   // let key = firebaseRef.push().key;
     console.log(key);
     
     for(let i in this.members)
@@ -57,11 +52,8 @@ export class CreateGroupPage {
         groupName: this.group.groupName
       });
     }
+    this.storage.set('groupkey', key);
+    this.navCtrl.push(OpenGroupPage, {groupKey:key});
 
-    /* this.fdb.list('/Messages/').push({
-      
-        
-      email: this.members
-    });
-  */  }
+  }
 }

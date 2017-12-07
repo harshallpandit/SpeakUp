@@ -1,3 +1,4 @@
+import { OpenGroupPage } from './../pages/open-group/open-group';
 import { CreateGroupPage } from './../pages/create-group/create-group';
 import { GroupsPage } from './../pages/groups/groups';
 import { AboutPage } from './../pages/about/about';
@@ -31,7 +32,8 @@ import { GroupPage } from '../pages/group/group';
     LoginPage,
     HomePage,
     GroupPage,
-    GroupsPage
+    GroupsPage,
+    OpenGroupPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { GroupPage } from '../pages/group/group';
     LoginPage,
     HomePage,
     GroupPage,
-    GroupsPage
+    GroupsPage,
+    OpenGroupPage
   ],
   providers: [
     StatusBar,

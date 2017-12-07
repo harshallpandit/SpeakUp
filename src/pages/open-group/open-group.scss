@@ -1,5 +1,5 @@
-page-group {
-    body {
+page-open-group {
+  /*  body {
         cursor: url('https://ionicframework.com/img/finger.png'), auto;
       }
       
@@ -58,10 +58,8 @@ page-group {
           display:block;
           max-width:65%;
           border-radius:.75rem;
-      }
+      }*/
 
-
-/*
       body {
         font-family: "Helvetica Neue";
         font-size: 20px;
@@ -75,7 +73,7 @@ page-group {
         div {
             max-width: 255px;
             word-wrap: break-word;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
         line-height: 24px;
         &:after {
           content: "";
@@ -88,7 +86,7 @@ page-group {
     .clear {clear: both}
     .from-me {
         position:relative;
-        padding:10px 20px;
+        padding:0px 12px;
         color:white; 
         background:#0B93F6;
         border-radius:25px;
@@ -121,7 +119,7 @@ page-group {
     }
     .from-them {
         position:relative;
-        padding:10px 20px;
+        padding:0px 12px;
         background:#E5E5EA;
         border-radius:25px;
         color: black;
@@ -152,11 +150,4 @@ page-group {
             -webkit-transform:translate(-30px, -2px);
         }
     }
-
-    .from-me li{
-        list-style-type:none;
-    }
-    .from-them li{
-        list-style-type:none;
-    }*/
 }

@@ -6,16 +6,16 @@
 
 <ion-content padding>
   
-  <div *ngFor="let sentence of sentences; let i = index" >  
-    <div *ngIf="flag[i]==1" class="from-me">
-      <p>{{sentence}}</p>
+  <div *ngFor="let message of messages; let i = index" >  
+    <div *ngIf="messageFrom[i] == email" class="from-me">
+      <p> {{message}}</p>
     </div>
     <div class="clear"><br/></div>
-    
-    <div *ngIf="flag[i]==0" class="from-them">
-      <p>{{sentence}}</p>
+  
+    <div *ngIf="messageFrom[i] != email" class="from-them">
+      <p><i style="color:#B200B2">{{displayNames[i]}}</i> <br/> {{message}}</p>
     </div>
-    <div class="clear"><br/></div>
+    <div class="clear"><br /></div>
   </div>
   <p>{{ error }}</p>
 </ion-content>
