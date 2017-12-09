@@ -48,6 +48,8 @@ export class OpenGroupPage {
            this.displayNames[i] = snapshot.child(key).val().displayName;
            i++;
          }
+
+         this.content.scrollToBottom();
       });
       
       firebase.database().ref('/Groups/'+this.navParams.get('groupKey')+'/').on('value', (snapshot) => {
