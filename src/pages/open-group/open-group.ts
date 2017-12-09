@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { User } from './../../app/models/user';
 import { Storage } from '@ionic/storage';
 import firebase  from 'firebase';
+import { ChangeDetectorRef } from '@angular/core';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 
 @Component({
@@ -36,13 +37,16 @@ export class OpenGroupPage {
   fullName: string;
   displayNames = [];
   groupName:string;
+ 
 
-  constructor(private speech: SpeechRecognition, private tts: TextToSpeech, private fdb: AngularFireDatabase, public storage: Storage, public navParams:NavParams) {
+  constructor(public navCtrl: NavController,private speech: SpeechRecognition, private tts: TextToSpeech, private fdb: AngularFireDatabase,public cdr:ChangeDetectorRef ,public storage: Storage, public navParams:NavParams) {
        let firebaseRef = firebase.database().ref('/Groups/messages/'+this.navParams.get('groupKey')).on('value', (snapshot) => {
          this.temp = snapshot.val();
          let i = 0;
+        
          for(let key in this.temp)
          {
+       
            this.messages[i] = snapshot.child(key).val().message;
            this.messageFrom[i] = snapshot.child(key).val().email;
            this.displayNames[i] = snapshot.child(key).val().displayName;
@@ -67,14 +71,18 @@ export class OpenGroupPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GroupPage');
+   
   }
+  
   ionViewDidEnter(){
     this.content.scrollToBottom();
   }
-
+  ionViewDidLeave(){
+   
+  }
   async speakIt():Promise<any>
   {
+   
      try {
       await this.tts.speak({text: this.text, locale: 'en-US'});
       this.storage.get('name').then((val) => {
@@ -94,7 +102,14 @@ export class OpenGroupPage {
     }
     this.content.scrollToBottom();
   }
-
+ async delete():Promise<any>{
+  this.fdb.list('/Groups/messages/'+this.navParams.get('groupKey')).remove().then(
+    _ => this.cdr.markForCheck()
+  );
+  
+  //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+  this.messages=[];
+ }
   async listen():Promise<any> {
     const permission = await this.speech.requestPermission();  
     this.speech.startListening().subscribe(data => {
