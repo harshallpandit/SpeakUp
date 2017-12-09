@@ -32,28 +32,6 @@ export class LoginPage {
   pushRegister() {
     this.navCtrl.push('RegisterPage');
   }
-
-  /*login(user: User) {
-    
-    const result = this.authentication.auth.signInWithEmailAndPassword(user.email, user.password);
-    console.log(result);
-    if(result) {
-      let email = user.email.replace('.', '*');
-      let firebaseRef = firebase.database().ref('/User/'+email+"/").on('value', (snapshot) => {
-        this.firstName = snapshot.val().firstName;
-        this.lastName = snapshot.val().lastName;
-        let i = 0;
-        this.name = this.firstName + " " + this.lastName;
-        this.storage.set('name', this.name);  
-     });
-     console.log(this.name);
-
-      this.storage.set('email', user.email);
-      
-      this.navCtrl.push(TabsPage);
-    }
-  }*/
-
   
   async login(user: User) {
     try {

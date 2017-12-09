@@ -24,6 +24,7 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { storage } from 'firebase/app';
 import { GroupPage } from '../pages/group/group';
+import { ProfilePage } from '../pages/profile/profile';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { GroupPage } from '../pages/group/group';
     HomePage,
     GroupPage,
     GroupsPage,
-    OpenGroupPage
+    OpenGroupPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,8 @@ import { GroupPage } from '../pages/group/group';
     HomePage,
     GroupPage,
     GroupsPage,
-    OpenGroupPage
+    OpenGroupPage,
+    ProfilePage
   ],
   providers: [
     StatusBar,
