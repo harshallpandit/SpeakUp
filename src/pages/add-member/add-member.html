@@ -1,0 +1,21 @@
+<!--
+  Generated template for the AddMemberPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add Member</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+      <ion-input type="email" [(ngModel)]="user.email" id='member' placeholder="Enter user id here"></ion-input>
+  </ion-item>  
+  <button ion-button (click)="addMember(user)">Add Member</button>
+</ion-content>

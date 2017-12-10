@@ -36,10 +36,7 @@ export class GroupsPage {
           this.groupKeys.push(groupKey);
         }
       })
-    console.log(this.email)
-    });
-    console.log(this.email)
-   
+    });   
   }
 
   ionViewDidLoad() {

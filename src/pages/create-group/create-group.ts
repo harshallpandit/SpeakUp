@@ -35,7 +35,6 @@ export class CreateGroupPage {
   addMember(user: User)
   {
     this.members.push(user.email);
-    console.log(this.members + "   ----starts here")
   }
 
   startConversation() {

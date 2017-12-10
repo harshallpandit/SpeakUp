@@ -38,10 +38,13 @@
   </button>
   -->
   <ion-toolbar class="no-border" color="white">        
-    <ion-input [(ngModel)]="text" placeholder="Write your message ..."></ion-input>  
+    <ion-input [(ngModel)]="text" placeholder="Write your message.."></ion-input>  
     <ion-buttons end>
       <button ion-button icon-only (click)="speakIt()">
           <ion-icon icon-only class = "icon-space" name="volume-up" color="primary"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="listen()">
+          <ion-icon icon-only class = "icon-space" name="microphone" color="primary"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar> 

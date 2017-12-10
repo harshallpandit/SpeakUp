@@ -11,6 +11,8 @@ import { Storage } from '@ionic/storage';
 import firebase  from 'firebase';
 import { ChangeDetectorRef } from '@angular/core';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
+import { AddMemberPage } from '../add-member/add-member';
+import { FormGroupName } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   selector: 'page-open-group',
@@ -37,6 +39,7 @@ export class OpenGroupPage {
   fullName: string;
   displayNames = [];
   groupName:string;
+  groupKey:string;
  
 
   constructor(public navCtrl: NavController,private speech: SpeechRecognition, private tts: TextToSpeech, private fdb: AngularFireDatabase,public cdr:ChangeDetectorRef ,public storage: Storage, public navParams:NavParams, public actionSheet: ActionSheetController) {
@@ -66,6 +69,8 @@ export class OpenGroupPage {
      this.storage.get('name').then((val) =>{
       this.fullName = val;
     }); 
+
+    this.groupKey = this.navParams.get('groupKey');
   }
 
   scrollToBottom() {
@@ -105,10 +110,12 @@ export class OpenGroupPage {
     this.content.scrollToBottom();
   }
 
- async delete():Promise<any>{
+ async clearChat():Promise<any>{
   this.fdb.list('/Groups/messages/'+this.navParams.get('groupKey')).remove().then(
     _ => this.cdr.markForCheck()
   );
+
+
   
   //this.navCtrl.setRoot(this.navCtrl.getActive().component);
   this.messages=[];
@@ -174,7 +181,7 @@ export class OpenGroupPage {
           text: 'Add member',
           icon: 'person-add',
           handler: () => {
-            this.navCtrl.push('GroupbuddiesPage');
+            this.navCtrl.push(AddMemberPage, {groupKey:this.groupKey, groupName:this.groupName});
           }
         },
         {
@@ -193,7 +200,7 @@ export class OpenGroupPage {
             }).catch((err) => {
               console.log(err);
             })*/
-            this.delete();
+            this.clearChat();
           }
         },
         {
@@ -205,6 +212,7 @@ export class OpenGroupPage {
             }).catch((err) => {
               console.log(err);
             })*/
+            //this.deleteGroup()
           }
         },
         {

@@ -5,35 +5,26 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color='primary'>
     <ion-title>New Group</ion-title>
   </ion-navbar>
-  
-
 </ion-header>
 
 <ion-content padding>
-  <!--ion-item>
-    <ion-label id='label' floating>What is your name?</ion-label>
-    <ion-input type="text" onClick="getElementById('name').innerHTML='IT DOESNT MATTER WHAT YOUR NAME IS!!!!!';
-    getElementById('label').innerHTML=''
-    " id='name'></ion-input>
-    </ion-item-->
-    <ion-item>
-        <ion-label floating>Group Name</ion-label>
-        <ion-input type="text" [(ngModel)] = "group.groupName"></ion-input>
-    </ion-item>
-    
-    <ion-item>
+  <ion-item>
+    <ion-label floating>Group Name</ion-label>
+    <ion-input type="text" [(ngModel)]="group.groupName"></ion-input>
+  </ion-item>
+  <ion-item>
     <ion-label floating>Add members</ion-label>
-    <ion-input type="text" [(ngModel)] = "user.email" id='member'></ion-input>
-    </ion-item>
-
-    <button ion-button (click)="addMember(user)">Add Member</button>
-    <button ion-button (click)="startConversation()">Start Conversation</button>
-    <ol class="messages">
-      <li *ngFor="let member of members">{{member}}</li>
-    </ol>
-    <div><br/></div>
+    <ion-input type="text" [(ngModel)]="user.email" id='member'></ion-input>
+  </ion-item>
+  <button ion-button (click)="addMember(user)">Add Member</button>
+  <button ion-button (click)="startConversation()">Start Conversation</button>
+  <ol class="messages">
+    <li *ngFor="let member of members">{{member}}</li>
+  </ol>
+  <div>
+    <br/>
+  </div>
 </ion-content>
