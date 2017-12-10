@@ -1,6 +1,11 @@
 <ion-header>
   <ion-navbar color = "primary">
     <ion-title>{{groupName}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="groupMenuOptions()">
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -19,13 +24,26 @@
   </div>
   <p>{{ error }}</p>
 </ion-content>
-<ion-footer ion-fixed>
-<ion-item>
-  <ion-textarea rows = "1" [(ngModel)] = "text"></ion-textarea>
-</ion-item>
-<button ion-button (click) = "speakIt()">speak</button>
-<button ion-button (click) = "listen()">Listen</button>
-<button ion-button (click) = "delete()" color="danger" >Delete</button>
 
+<ion-footer ion-fixed>
+  <!--
+  <ion-item>
+    <ion-textarea rows = "1" [(ngModel)] = "text" placeholder="Write your message ..."></ion-textarea>
+  </ion-item>
+  <button ion-button (click) = "speakIt()">Speak</button>
+  <button ion-button (click) = "listen()">Listen</button>
+  
+  <button ion-button round block class="listen-button">Listen
+      <ion-icon icon-only class = "icon-space" name="microphone"></ion-icon>
+  </button>
+  -->
+  <ion-toolbar class="no-border" color="white">        
+    <ion-input [(ngModel)]="text" placeholder="Write your message ..."></ion-input>  
+    <ion-buttons end>
+      <button ion-button icon-only (click)="speakIt()">
+          <ion-icon icon-only class = "icon-space" name="volume-up" color="primary"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar> 
 
 </ion-footer>

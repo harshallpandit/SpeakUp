@@ -1,6 +1,6 @@
 import { storage } from 'firebase/app';
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Content } from 'ionic-angular';
+import { NavController, Content, ActionSheetController } from 'ionic-angular';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { SpeechRecognition } from '@ionic-native/speech-recognition'; 
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -39,7 +39,7 @@ export class OpenGroupPage {
   groupName:string;
  
 
-  constructor(public navCtrl: NavController,private speech: SpeechRecognition, private tts: TextToSpeech, private fdb: AngularFireDatabase,public cdr:ChangeDetectorRef ,public storage: Storage, public navParams:NavParams) {
+  constructor(public navCtrl: NavController,private speech: SpeechRecognition, private tts: TextToSpeech, private fdb: AngularFireDatabase,public cdr:ChangeDetectorRef ,public storage: Storage, public navParams:NavParams, public actionSheet: ActionSheetController) {
        let firebaseRef = firebase.database().ref('/Groups/messages/'+this.navParams.get('groupKey')).on('value', (snapshot) => {
          this.temp = snapshot.val();
          let i = 0;
@@ -104,6 +104,7 @@ export class OpenGroupPage {
     }
     this.content.scrollToBottom();
   }
+
  async delete():Promise<any>{
   this.fdb.list('/Groups/messages/'+this.navParams.get('groupKey')).remove().then(
     _ => this.cdr.markForCheck()
@@ -163,6 +164,60 @@ export class OpenGroupPage {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  groupMenuOptions() {
+    let sheet = this.actionSheet.create({
+      title: 'Group Actions',
+      buttons: [
+        {
+          text: 'Add member',
+          icon: 'person-add',
+          handler: () => {
+            this.navCtrl.push('GroupbuddiesPage');
+          }
+        },
+        {
+          text: 'Remove member',
+          icon: 'remove-circle',
+          handler: () => {
+            this.navCtrl.push('GroupmembersPage');
+          }
+        },
+        {
+          text: 'Clear Conversation',
+          icon: 'close-circle',
+          handler: () => {/*
+            this.groupservice.deletegroup().then(() => {
+              this.navCtrl.pop();
+            }).catch((err) => {
+              console.log(err);
+            })*/
+            this.delete();
+          }
+        },
+        {
+          text: 'Delete Group',
+          icon: 'trash',
+          handler: () => {/*
+            this.groupservice.deletegroup().then(() => {
+              this.navCtrl.pop();
+            }).catch((err) => {
+              console.log(err);
+            })*/
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: 'cancel',
+          handler: () => {
+            console.log('Cancelled');
+          }
+        }
+      ]
+    })
+    sheet.present();
   }
 
 }

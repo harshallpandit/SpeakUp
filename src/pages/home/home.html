@@ -1,28 +1,52 @@
 <ion-header>
-  <ion-navbar color = "primary">
-    <ion-title>Home</ion-title>
+  <ion-navbar color="Primary">
+    <ion-title>Conversation</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  
-  <div *ngFor="let sentence of sentences; let i = index" >  
+
+  <div *ngFor="let sentence of sentences; let i = index">
     <div *ngIf="flag[i]==1" class="from-me">
       <p>{{sentence}}</p>
     </div>
-    <div class="clear"><br/></div>
-    
+    <div class="clear">
+      <br/>
+    </div>
+
     <div *ngIf="flag[i]==0" class="from-them">
       <p>{{sentence}}</p>
     </div>
-    <div class="clear"><br/></div>
+    <div class="clear">
+      <br/>
+    </div>
   </div>
   <p>{{ error }}</p>
 </ion-content>
+
 <ion-footer ion-fixed>
+  <!--
 <ion-item>
   <ion-textarea rows = "1" [(ngModel)] = "text"></ion-textarea>
 </ion-item>
 <button ion-button (click) = "speakIt()">speak</button>
 <button ion-button (click) = "listen()">Listen</button>
+-->
+  <ion-row>
+    <ion-col width-50 style="text-align: right">
+      <button ion-button round outline (click)="listen()">Listen
+          <ion-icon icon-only class="icon-space" name="microphone"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col width-50 style="text-align: left">
+      <button ion-button round (click)="speakIt()">Speak
+          <ion-icon icon-only class="icon-space" name="volume-up"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+
+  <ion-toolbar class="no-border" color="white">
+    <ion-input [(ngModel)]="text" placeholder="Write your message ..."></ion-input>
+  </ion-toolbar>
+
 </ion-footer>
