@@ -1,7 +1,7 @@
 import { OpenGroupPage } from './../open-group/open-group';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import firebase from 'firebase';
 import { Group } from './../../app/models/group';
 import { storage } from 'firebase/app';
@@ -22,7 +22,9 @@ export class GroupsPage {
   groupKeys = [];
   chats = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public loadingCtrl: LoadingController) {
+    this.groups = [];
+    this.groupKeys = [];
     this.storage.get('email').then((val) => {
       this.email = val;
       firebase.database().ref('/User/').child(this.email.replace('.','*')).child('groups').on('value', (snapshot) => {
@@ -40,7 +42,7 @@ export class GroupsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GroupsPage');
+     console.log('ionViewDidLoad GroupsPage');
   }
 
   createGroup(){

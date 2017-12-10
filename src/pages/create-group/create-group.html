@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar color='primary'>
+  <ion-navbar>
     <ion-title>New Group</ion-title>
   </ion-navbar>
 </ion-header>
@@ -19,12 +19,22 @@
     <ion-label floating>Add members</ion-label>
     <ion-input type="text" [(ngModel)]="user.email" id='member'></ion-input>
   </ion-item>
-  <button ion-button (click)="addMember(user)">Add Member</button>
-  <button ion-button (click)="startConversation()">Start Conversation</button>
-  <ol class="messages">
-    <li *ngFor="let member of members">{{member}}</li>
-  </ol>
+  <button ion-button round (click)="addMember(user)">Add Member</button>
+  <div>
+      <br/>
+  </div>
+  <div>
+    <h6>Member List</h6>
+    <ol>
+      <li *ngFor="let member of members">{{member}}</li>
+    </ol>
+  </div>
+  
   <div>
     <br/>
   </div>
 </ion-content>
+<ion-footer>
+    <button ion-button full round (click)="startConversation()">Create Group</button>
+
+</ion-footer>

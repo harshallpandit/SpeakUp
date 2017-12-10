@@ -25,7 +25,8 @@ export class AddMemberPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fdb: AngularFireDatabase) {
     this.groupKey = this.navParams.get('groupKey');
-    this.groupName = this.navParams.get('groupName');
+    //this.groupName = this.navParams.get('groupName');
+
   }
 
   addMember(user: User)
@@ -33,6 +34,9 @@ export class AddMemberPage {
     console.log(user.email);
     
     //Check if this user id has registered
+    firebase.database().ref('/Groups/'+this.navParams.get('groupKey')+'/').on('value', (snapshot) => {
+      this.groupName = snapshot.val().groupName;
+    });
 
     //If yes, then add to this group to user's group list
     firebase.database().ref('/User/').child(this.user.email.replace('.' , '*')).child('groups').push({
@@ -40,17 +44,12 @@ export class AddMemberPage {
       groupName: this.groupName
     });
 
-    //firebase.database().ref('/Groups/'+).on('value', (snapshot) =>({
-     
-   // }));
     firebase.database().ref('/Groups/'+this.groupKey+'/members').on('value', (snapshot) => {
       this.members = snapshot.val();
     });
 
     this.members.push(user.email);
     console.log(this.members);
-
-    //firebase.database().ref('/Groups/'+this.groupKey+'/members').remove();
 
     firebase.database().ref('/Groups').child(this.groupKey).update({
       members: this.members

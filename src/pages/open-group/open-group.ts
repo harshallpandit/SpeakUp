@@ -19,6 +19,7 @@ import { FormGroupName } from '@angular/forms/src/directives/reactive_directives
   templateUrl: 'open-group.html',
 })
 export class OpenGroupPage {
+  memberList : Map<number, string>;
   @ViewChild(Content) content: Content;
   data = [];
   text: string;
@@ -39,8 +40,9 @@ export class OpenGroupPage {
   fullName: string;
   displayNames = [];
   groupName:string;
-  groupKey:string;
- 
+  groupKey:string;  
+  groupListKey = [];
+  nodeToBeDeleted: string;
 
   constructor(public navCtrl: NavController,private speech: SpeechRecognition, private tts: TextToSpeech, private fdb: AngularFireDatabase,public cdr:ChangeDetectorRef ,public storage: Storage, public navParams:NavParams, public actionSheet: ActionSheetController) {
        let firebaseRef = firebase.database().ref('/Groups/messages/'+this.navParams.get('groupKey')).on('value', (snapshot) => {
@@ -57,11 +59,7 @@ export class OpenGroupPage {
          }
 
          this.content.scrollToBottom();
-      });
-      
-      firebase.database().ref('/Groups/'+this.navParams.get('groupKey')+'/').on('value', (snapshot) => {
-        this.groupName = snapshot.val().groupName;
-      });
+      });  
 
     this.storage.get('email').then((val) => {
       this.email = val;
@@ -71,6 +69,11 @@ export class OpenGroupPage {
     }); 
 
     this.groupKey = this.navParams.get('groupKey');
+
+    firebase.database().ref('/Groups/'+this.navParams.get('groupKey')+'/').on('value', (snapshot) => {
+      this.groupName = snapshot.val().groupName;
+    });
+
   }
 
   scrollToBottom() {
@@ -87,6 +90,40 @@ export class OpenGroupPage {
   ionViewDidLeave(){
    
   }
+
+  deleteGroup(){
+
+    firebase.database().ref('/Groups').child(this.groupKey).on('value', (snapshot) => {
+      this.memberList = snapshot.val().members;
+      console.log(this.memberList)
+    });
+
+
+    this.memberList.forEach((value:string, key:number) => {
+      console.log("val "+value);
+
+      firebase.database().ref('/User/').child(value.replace('.','*')).child('groups').on('value', (snapshot) => {
+        this.groupListKey = snapshot.val();
+  
+        for(let k in this.groupListKey){
+          console.log("k "+k)
+          let groupKey = snapshot.child(k).val().groupKey;
+          if(groupKey == this.groupKey){
+            this.nodeToBeDeleted = k;
+            firebase.database().ref('/User/').child(value.replace('.','*')).child('groups').child(this.nodeToBeDeleted).remove();
+            break;
+          }
+        }
+      })
+      console.log("nodeToBeDeleted "+this.nodeToBeDeleted)
+
+    });
+
+    firebase.database().ref('/Groups').child(this.groupKey).remove();
+    
+    this.navCtrl.pop(); 
+  }
+
   async speakIt():Promise<any>
   {
    
@@ -114,7 +151,6 @@ export class OpenGroupPage {
   this.fdb.list('/Groups/messages/'+this.navParams.get('groupKey')).remove().then(
     _ => this.cdr.markForCheck()
   );
-
 
   
   //this.navCtrl.setRoot(this.navCtrl.getActive().component);
@@ -181,16 +217,17 @@ export class OpenGroupPage {
           text: 'Add member',
           icon: 'person-add',
           handler: () => {
-            this.navCtrl.push(AddMemberPage, {groupKey:this.groupKey, groupName:this.groupName});
+            this.navCtrl.push(AddMemberPage, {groupKey:this.groupKey});
           }
         },
+        /*
         {
           text: 'Remove member',
           icon: 'remove-circle',
           handler: () => {
             this.navCtrl.push('GroupmembersPage');
           }
-        },
+        },*/
         {
           text: 'Clear Conversation',
           icon: 'close-circle',
@@ -212,7 +249,7 @@ export class OpenGroupPage {
             }).catch((err) => {
               console.log(err);
             })*/
-            //this.deleteGroup()
+            this.deleteGroup()
           }
         },
         {

@@ -7,18 +7,20 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>groups</ion-title>
+    <ion-title>Groups</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="createGroup()">
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-item (click) = 'createGroup()'>New Group</ion-item>
+  <ion-item><b>My Groups</b></ion-item>
     <ion-list no-lines>
-        <ion-list-header>
-          My Groups
-        </ion-list-header>
         <ion-item let i = 0 *ngFor="let group of groups; let i = index">
           <!--ion-avatar item-left>
             <img src="{{item.groupimage}}">

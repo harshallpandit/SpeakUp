@@ -52,7 +52,8 @@ export class CreateGroupPage {
       });
     }
     this.storage.set('groupkey', key);
-    this.navCtrl.push(OpenGroupPage, {groupKey:key});
+    this.navCtrl.pop()
+    //this.navCtrl.push(OpenGroupPage, {groupKey:key});
 
   }
 }

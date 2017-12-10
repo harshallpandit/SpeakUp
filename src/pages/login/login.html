@@ -51,13 +51,13 @@
             <ion-input type="password" placeholder="Password" [(ngModel)]="user.password" value="therock"></ion-input>
           </ion-item>
           <div class="spacer" style="height: 10px;"></div>
-          <a (click)="passwordreset()">Forgot login details ? <b> Get Help </b></a>
+          <a (click)="passwordreset()">Forgot login details? <b> Get Help </b></a>
           <div class="spacer" style="height: 10px;"></div>
-          <button ion-button block round outline color="light" (click)="login(user)">Login</button>
+          <button ion-button block round outline color="light" (click)="login(user)"><b>Login</b></button>
           <div class="spacer" style="height: 10px;"></div>
           <p>OR</p>
           <div class="spacer" style="height: 10px;"></div>
-          <button ion-button clear full color="light" (click)="pushRegister()">Don't have an account? Sign up</button>
+          <button ion-button clear full color="light" (click)="pushRegister()">Don't have an account?<b>&nbsp;Sign up! </b></button>
         </ion-list>
         <p style = "color:red">{{error}}</p>
       </ion-card-content>
