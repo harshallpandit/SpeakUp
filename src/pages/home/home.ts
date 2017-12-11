@@ -84,7 +84,7 @@ export class HomePage {
     }, error => console.log(error));
     //this.speech.startListening().subscribe(data => this.sentences = data, error => console.log(error));
     //this.fdb.list('/Chat/listen').push(this.sentences[0]);
-    this.speech.stopListening()
+    //this.speech.stopListening()
   }
 
   async hasPermission():Promise<boolean> {
